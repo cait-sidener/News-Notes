@@ -31,14 +31,14 @@ mongoose.connect("mongodb://localhost/unit18Populater", { useNewUrlParser: true 
 
 // Routes
 
-// A GET route for scraping the echoJS website
+// A GET route for scraping the BabyCenter website
 app.get("/scrape", function(req, res) {
   // First, we grab the body of the html with axios
   axios.get("https://www.babycenter.com/toddler").then(function(response) {
     // Then, we load that into cheerio and save it to $ for a shorthand selector
     var $ = cheerio.load(response.data);
 
-    // Now, we grab every h2 within an article tag, and do the following:
+    // Now, we grab every  within an article tag, and do the following:
     $(".contentSection").each(function(i, element) {
       // Save an empty result object
       var result = {};
@@ -48,7 +48,7 @@ app.get("/scrape", function(req, res) {
         .children("a")
         .text();
       result.link = $(this)
-        .children("a")
+        .find("a")
         .attr("href");
 
       // Create a new Article using the `result` object built from scraping
