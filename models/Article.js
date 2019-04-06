@@ -11,13 +11,8 @@ var ArticleSchema = new Schema({
     type: String,
     required: true
   },
-  date: {
-    type: Date
-  },
-  // `url` is required and of type String
-  url: {
+  summary: {
     type: String,
-    required: true
   }
 });
 

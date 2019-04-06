@@ -3,7 +3,7 @@ $(document).ready(function() {
   // Setting a reference to the article-container div where all the dynamic content will go
   // Adding event listeners to any dynamically generated "save article"
   // and "scrape new article" buttons
-  var articleContainer = $("#full_category");
+  var articleContainer = $(".your-baby");
   console.log("----------------------");
   console.log(articleContainer)
   $(document).on("click", ".btn.save", handleArticleSave);
@@ -46,7 +46,6 @@ $(document).ready(function() {
     var cardHeader = $("<div class='card-header'>").append(
       $("<h3>").append(
         $("<a class='article-link' target='_blank' rel='noopener noreferrer'>")
-          .attr("href", article.url)
           .text(article.headline),
         $("<a class='btn btn-success save'>Save Article</a>")
       )
@@ -102,7 +101,6 @@ $(document).ready(function() {
     // Using a patch method to be semantic since this is an update to an existing record in our collection
     $.ajax({
       method: "PUT",
-      url: "/api/headlines/" + articleToSave._id,
       data: articleToSave
     }).then(function(data) {
       // If the data was saved successfully
