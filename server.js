@@ -40,7 +40,7 @@ app.engine("handlebars", exphbs({
 app.set("view engine", "handlebars");
 
 // Database configuration with mongoose
-mongoose.connect("mongodb://heroku_jmv816f9:5j1nd4taq42hi29bfm5hobeujd@ds133192.mlab.com:33192/heroku_jmv816f9");
+mongoose.connect("mongodb://cait.sidener:Pass4mlab@ds229826.mlab.com:29826/heroku_h6vvdqcm");
 //mongoose.connect("mongodb://localhost/mongoscraper");
 var db = mongoose.connection;
 
@@ -80,11 +80,11 @@ app.get("/saved", function(req, res) {
 // A GET request to scrape the echojs website
 app.get("/scrape", function(req, res) {
   // First, we grab the body of the html with request
-  request("https://www.babycenter.com/toddler", function(error, response, html) {
+  request("https://www.whattoexpect.com/toddler/12-month-old/", function(error, response, html) {
     // Then, we load that into cheerio and save it to $ for a shorthand selector
     var $ = cheerio.load(html);
     // Now, we grab every h2 within an article tag, and do the following:
-    $("article").each(function(i, element) {
+    $(".your-baby").each(function(i, element) {
 
       // Save an empty result object
       var result = {};
@@ -98,9 +98,9 @@ app.get("/scrape", function(req, res) {
         summary = $(this).find("p").text();
       };
 
-      result.title = $(this).find("h2").text();
+      result.title = $(this).find(".your-baby__headline").text();
       result.summary = summary;
-      result.link = "https://www.babycenter.com/toddler" + $(this).find("a").attr("href");
+      result.link = "https://www.whattoexpect.com/toddler/12-month-old/" + $(this).find("a").attr("href");
 
       // Using our Article model, create a new entry
       // This effectively passes the result object to the entry (and the title and link)
@@ -144,8 +144,6 @@ app.get("/articles", function(req, res) {
 app.get("/articles/:id", function(req, res) {
   // Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
   Article.findOne({ "_id": req.params.id })
-  // ..and populate all of the notes associated with it
-  .populate("note")
   // now, execute our query
   .exec(function(error, doc) {
     // Log any errors
