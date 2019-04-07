@@ -23,9 +23,9 @@ This burger logger is created with
 ## Introduction
 Start by clicking the "Scrape Articles" button for a list of current articles from the Horror's Not Dead website.
 
-![Updated List of Horror's Not Dead Articles](images/scraper.png)
+![Updated List of Horror's Not Dead Articles](public/assets/images/scraper.png)
 
 ## Saved Articles
 Find a surprisingly disturbing title you'd like to peruse? Click the "Save Article" button, head on over to your Saved Horrorticles page, and check out the article for yourself. You can even navigate to the host website for more information.
 
-![Saved Horrorticle List](images/savedlist.png)
+![Saved Horrorticle List](public/assets/images/savedlist.png)
