@@ -1,29 +1,37 @@
 <!--Homepage-->
-<div class="container">
-    <div class="col-md-12 jumbotron">
-        <div class="text-center">
-            <h1>What to Expect with Your One Year Old</h1>
+        <div class="jumbotron text-center">
+            <div class="overlay">
+            </div>
+            <div class="background-image">
+
+            </div>
+            <div class="caption">
+            <h1>Mongo Scraper</h1>
+            <h3>Horror's Not Dead</h3>
+            </div>
         </div>
 
-    </div>
-    <div class="col-md-12">
+<div class="container-fluid article-container">
+    <div class="row">
+    <div class="col-md-12" id="scrape-results">
         {{#if article}}
             {{#each article}}
-            <div class="panel panel-default">
+            <div class="panel panel-default" id="panel">
                 <div class="panel-heading">
                     <h4>{{this.title}}</h4>
                 </div>
                     <br><br>
-                    <button type="button" class="btn btn-success save" data-id={{this._id}}>Save Article</button>
+                    <button type="button" id="save" class="btn btn-sm save" data-id={{this._id}}>Save Article</button>
                 </div>
+            </div>
+            </div>
             </div>
             {{/each}}
         {{else}}
         <div class="panel panel-default">
             <div class="panel-body">
-            <h4>Uh Oh. Looks like we don't have any new articles.</h4>
+            <h4>Uh Oh. Looks like new articles have been murdered.</h4>
             </div>
          </div>
         {{/if}}
-    </div>
-</div>
+</

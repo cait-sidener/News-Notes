@@ -3,16 +3,17 @@ $(document).ready(function() {
   // Setting a reference to the article-container div where all the dynamic content will go
   // Adding event listeners to any dynamically generated "save article"
   // and "scrape new article" buttons
-  var articleContainer = $(".your-baby");
+  var articleContainer = $(".entry");
   console.log("----------------------");
   console.log(articleContainer)
-  $(document).on("click", ".btn.save", handleArticleSave);
-  $(document).on("click", ".scrape-new", handleArticleScrape);
+  $(document).on("click", "#save", handleArticleSave);
+  $(document).on("click", "#scrape", handleArticleScrape);
+  $(document).on("click", ".delete", handleArticleDelete);
   $(".clear").on("click", handleArticleClear);
 
   function initPage() {
     // Run an AJAX request for any unsaved headlines
-    $.get("/api/headlines?saved=false").then(function(data) {
+    $.get("/articles").then(function(data) {
       articleContainer.empty();
       // If we have headlines, render them to the page
       if (data && data.length) {
@@ -47,7 +48,7 @@ $(document).ready(function() {
       $("<h3>").append(
         $("<a class='article-link' target='_blank' rel='noopener noreferrer'>")
           .text(article.headline),
-        $("<a class='btn btn-success save'>Save Article</a>")
+        $("<a class='btn btn-sm save'>Save Article</a>")
       )
     );
 
@@ -88,20 +89,18 @@ $(document).ready(function() {
     // This function is triggered when the user wants to save an article
     // When we rendered the article initially, we attached a javascript object containing the headline id
     // to the element using the .data method. Here we retrieve that.
-    var articleToSave = $(this)
-      .parents(".card")
-      .data();
+    var articleToSave = $(this).data("id");
 
     // Remove card from page
     $(this)
       .parents(".card")
       .remove();
 
-    articleToSave.saved = true;
+    // articleToSave.saved = true;
     // Using a patch method to be semantic since this is an update to an existing record in our collection
     $.ajax({
       method: "PUT",
-      data: articleToSave
+      url: "/articles/save/" + articleToSave
     }).then(function(data) {
       // If the data was saved successfully
       if (data.saved) {
@@ -111,14 +110,34 @@ $(document).ready(function() {
     });
   }
 
+  function handleArticleDelete() {
+    // This function is triggered when the user wants to save an article
+    // When we rendered the article initially, we attached a javascript object containing the headline id
+    // to the element using the .data method. Here we retrieve that.
+    var articleToDelete = $(this).data("id");
+
+    // Remove card from page
+    $(this)
+      .parents(".card")
+      .remove();
+
+    // Using a patch method to be semantic since this is an update to an existing record in our collection
+    $.ajax({
+      method: "PUT",
+      url: "/articles/delete/" + articleToDelete
+    }).then(function(data) {
+        // Run the initPage function again. This will reload the entire list of articles
+      location.reload();      
+    });
+  }
+
   function handleArticleScrape() {
     // This function handles the user clicking any "scrape new article" buttons
-    $.get("/api/fetch").then(function(data) {
+    $.get("/scrape").then(function(data) {
       // If we are able to successfully scrape the Baby Center and compare the articles to those
       // already in our collection, re render the articles on the page
       // and let the user know how many unique articles we were able to save
-      initPage();
-      bootbox.alert($("<h3 class='text-center m-top-80'>").text(data.message));
+      location.reload();
     });
   }
 

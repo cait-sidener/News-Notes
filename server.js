@@ -59,7 +59,7 @@ db.once("open", function() {
 
 //GET requests to render Handlebars pages
 app.get("/", function(req, res) {
-  Article.find({"saved": false}, function(error, data) {
+  Article.find({}, function(error, data) {
     var hbsObject = {
       article: data
     };
@@ -80,11 +80,11 @@ app.get("/saved", function(req, res) {
 // A GET request to scrape the echojs website
 app.get("/scrape", function(req, res) {
   // First, we grab the body of the html with request
-  request("https://www.whattoexpect.com/toddler/12-month-old/", function(error, response, html) {
+  request("http://horrorsnotdead.com/wpress/", function(error, response, html) {
     // Then, we load that into cheerio and save it to $ for a shorthand selector
     var $ = cheerio.load(html);
     // Now, we grab every h2 within an article tag, and do the following:
-    $(".your-baby").each(function(i, element) {
+    $(".entry").each(function(i, element) {
 
       // Save an empty result object
       var result = {};
@@ -98,9 +98,9 @@ app.get("/scrape", function(req, res) {
         summary = $(this).find("p").text();
       };
 
-      result.title = $(this).find(".your-baby__headline").text();
+      result.title = $(this).find("h2").text();
       result.summary = summary;
-      result.link = "https://www.whattoexpect.com/toddler/12-month-old/" + $(this).find("a").attr("href");
+      result.link = "http://horrorsnotdead.com/wpress/" + $(this).find("a").attr("href");
 
       // Using our Article model, create a new entry
       // This effectively passes the result object to the entry (and the title and link)
@@ -140,6 +140,7 @@ app.get("/articles", function(req, res) {
   });
 });
 
+
 // Grab an article by it's ObjectId
 app.get("/articles/:id", function(req, res) {
   // Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
@@ -157,9 +158,15 @@ app.get("/articles/:id", function(req, res) {
   });
 });
 
+app.get("/articles/clear", function(req, res){
+  Article.remove().then(function(){
+    res.send("Database cleared!");
+  });
+})
+
 
 // Save an article
-app.post("/articles/save/:id", function(req, res) {
+app.put("/articles/save/:id", function(req, res) {
       // Use the article id to find and update its saved boolean
       Article.findOneAndUpdate({ "_id": req.params.id }, { "saved": true})
       // Execute the above query
@@ -176,7 +183,7 @@ app.post("/articles/save/:id", function(req, res) {
 });
 
 // Delete an article
-app.post("/articles/delete/:id", function(req, res) {
+app.put("/articles/delete/:id", function(req, res) {
       // Use the article id to find and update its saved boolean
       Article.findOneAndUpdate({ "_id": req.params.id }, {"saved": false, "notes": []})
       // Execute the above query

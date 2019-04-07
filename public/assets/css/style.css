@@ -1,0 +1,143 @@
+a {
+    color: #990000;
+    display: inline-block;
+    font-family: 'Creepster', cursive;
+    font-size: 1em;
+    line-height: inherit;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+body {
+    background-color: 
+    #2f391a;
+}
+
+.card { 
+    background-color:#85898a
+}
+
+.article-container {
+    padding-bottom: 25px;
+}
+
+.bg-primary {
+    background-color: #000;
+}
+
+.btn-sm {
+    background-color: #990000;
+    color: #000;
+    font-size: 2em;
+    margin-bottom: 5%;
+    margin-left: 5%;
+}
+
+.container-fluid {
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+h4 {
+    font-size: 1.7em;
+}
+
+.jumbotron {
+    position: relative;
+    width: 100%;
+    height: 500px;
+    padding: 0;
+    font-family: 'Butcherman', cursive;
+    box-shadow: 10px 5px 20px 2px;
+}
+
+.jumbotron .background-image {
+    height: 100%;
+    background-image: url("../images/spooky.jpeg");
+    background-size: cover;
+}
+
+.jumbotron .caption {
+    position: absolute;
+    top: 30%;
+    width: 100%;
+    text-align: center;
+}
+
+.jumbotron .overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: auto;
+    background: linear-gradient(#333, black);
+    opacity: 0.1;
+}
+
+.jumbotron .caption h1,
+.jumbotron .caption h3 {
+    color: white;
+}
+
+.jumbotron h1 {
+    font-size: 80px;
+    font-weight: 800;
+}
+
+.jumbotron h3 {
+    font-size: 30px;
+}
+
+.navbar-btn {
+    background-color: #990000 !important;
+    color: #000;
+    display: inline-block;
+    font-size: 1em;
+    line-height: 1.5;
+    margin-bottom: 1%;
+    margin-left: 25%;
+    text-align: center;
+    user-select: none;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+.navbar-nav {
+    color: #990000;
+    display: inline-block;
+    font-family: 'Creepster', cursive;
+    font-size: 2em;
+    line-height: inherit;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+#panel {
+    font-family: 'Creepster', cursive;
+}
+
+.panel-body {
+    font-family: 'Creepster', cursive;
+    font-size: 1.3em;
+}
+
+.panel-heading {
+    font-family: 'Creepster', cursive;
+    font-size: 1.5em;
+}
+
+#scrape-results {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+textarea {
+    padding: 10px;
+    resize: none;
+    width: 100%;
+  }
