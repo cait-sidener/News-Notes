@@ -8,17 +8,13 @@ a {
     white-space: nowrap;
 }
 
+.article-container {
+    padding-bottom: 25px;
+}
+
 body {
     background-color: 
     #2f391a;
-}
-
-.card { 
-    background-color:#85898a
-}
-
-.article-container {
-    padding-bottom: 25px;
 }
 
 .bg-primary {
@@ -33,12 +29,25 @@ body {
     margin-left: 5%;
 }
 
+.card { 
+    background-color:#85898a
+}
+
 .container-fluid {
     width: 100%;
     padding-right: 15px;
     padding-left: 15px;
     margin-right: auto;
     margin-left: auto;
+}
+
+.deleteNote {
+    display: inline-block;
+}
+
+.previousNotes {
+    display: inline-block;
+    width: 80%;
 }
 
 h4 {

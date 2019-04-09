@@ -7,6 +7,7 @@ var path = require("path");
 
 // Requiring Note and Article models
 var Article = require("./models/Article.js");
+var Note = require("./models/Note.js")
 
 // Scraping tools
 var request = require("request");
@@ -146,6 +147,7 @@ app.get("/articles/:id", function(req, res) {
   // Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
   Article.findOne({ "_id": req.params.id })
   // now, execute our query
+  .populate("note")
   .exec(function(error, doc) {
     // Log any errors
     if (error) {
@@ -199,6 +201,46 @@ app.put("/articles/delete/:id", function(req, res) {
       });
 });
 
+// Create a new note
+app.post("/notes/save/:id", function(req, res) {
+  var newNote = new Note ({
+    body: req.body.text,
+    article: req.params.id
+  });
+  newNote.save(function(error, note) {
+    if (error) {
+      console.log(error);
+    }
+    else {
+      Article.findOneAndUpdate({ "_id": req.params.id }, {$push: { "notes": note }})
+      .exec(function(err) {
+        if (err) {
+          res.send(note);
+        }
+      });
+    }
+  });
+});
+
+// Delete a note
+app.delete("/notes/delete/:note_id/:article_id", function(req, res) {
+  Note.findOneAndDelete({ "_id": req.params.note_id }, function(err) {
+    if (err) {
+      res.send(err);
+    }
+    else {
+      Article.findOneAndUpdate({ "_id": req.params.article_id }, {$pull: {"notes": req.params.note_id}})
+      .exec(function(err) {
+        if(err) {
+          res.send(err);
+        }
+        else {
+          res.send("Note Deleted!")
+        }
+      });
+    }
+  });
+});
 
 // Listen on port
 app.listen(port, function() {

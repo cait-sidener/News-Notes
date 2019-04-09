@@ -148,3 +148,36 @@ $(document).ready(function() {
     });
   }
 });
+
+// Handle Save Note button
+$(".saveNote").on("click", function() {
+  var thisId = $(this).attr("data-id");
+  if(!$("#noteText" + thisId).val()) {
+    alert("Enter a note to save!")
+  } else {
+    $.ajax ({
+      method: "POST",
+      url: "/notes/save/" + thisId,
+      data: {
+        text: $("#noteText" + thisId).val()
+      }
+    }).done(function (data) {
+      $("#noteText" + thisId).val("");
+      $(".modalNote").modal("hide");
+      window.location = "/saved"
+    });
+  }
+});
+
+// Handle Delete note button
+$(".deleteNote").on("click", function() {
+  var noteId = $(this).attr("data-note-id");
+  var articleId = $(this).attr("data-article-id");
+  $.ajax ({
+    method: "DELETE",
+    url: "/notes/delete/" + noteId + "/" + articleId
+  }).done(function(data) {
+    $(".modalNote").modal("hide");
+    window.location = "/saved"
+  })
+});
