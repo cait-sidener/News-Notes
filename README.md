@@ -6,7 +6,7 @@ Mongo Scraper is a web app that lets users view the latest news in the horror wo
 Please check out the deployed version through Heroku: [Mongo Scraper](https://news-notes4u.herokuapp.com/).
 
 ## Languages Used
-This burger logger is created with 
+This app is created with 
 * Node.js
 * Express.js
 * Handlebars.js
