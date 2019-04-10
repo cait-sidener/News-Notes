@@ -150,18 +150,22 @@ $(document).ready(function() {
 });
 
 // Handle Save Note button
-$(".saveNote").on("click", function() {
+$(document).on("click", ".saveNote", function() {
   var thisId = $(this).attr("data-id");
-  if(!$("#noteText" + thisId).val()) {
+  var value = $("#noteText" + thisId).val()
+  console.log('id', thisId)
+  console.log('value', value)
+  if(!value) {
     alert("Enter a note to save!")
   } else {
     $.ajax ({
       method: "POST",
       url: "/notes/save/" + thisId,
       data: {
-        text: $("#noteText" + thisId).val()
+        text: value
       }
     }).done(function (data) {
+      console.log('data', data)
       $("#noteText" + thisId).val("");
       $(".modalNote").modal("hide");
       window.location = "/saved"

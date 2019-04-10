@@ -215,8 +215,9 @@ app.post("/notes/save/:id", function(req, res) {
       Article.findOneAndUpdate({ "_id": req.params.id }, {$push: { "notes": note }})
       .exec(function(err) {
         if (err) {
-          res.send(note);
+          console.log(err.toString())
         }
+        res.json(note)
       });
     }
   });
